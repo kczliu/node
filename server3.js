@@ -11,6 +11,7 @@ const ejs=require('ejs');
 const jade=require('jade');
 const fs = require('fs')
 const path = require('path')
+const consolidate = require('consolidate')
 var server=express();
 
 server.listen(3333);
@@ -30,7 +31,7 @@ server.use(cookieSession({name: 'zns_sess_id', keys: arr, maxAge: 20*3600*1000})
 server.use(bodyParser.urlencoded({extended: false}));
 server.use(multer({dest: './www/upload'}).any());
 
-//用户请求
+/*//用户请求
 server.use('/', function (req, res, next){
     console.log(req.query, req.body, req.files, req.cookies, req.session);
     var newname = req.files[0].path + path.parse(req.files[0].originalname).ext
@@ -43,7 +44,15 @@ server.use('/', function (req, res, next){
 
     })
     next()
-});
+});*/
 
+
+server.set('view engine','html')
+server.set('views','./views')
+server.engine('html',consolidate.ejs)
+
+server.get('/index',(req,res)=>{
+    res.render('1.ejs',{name:'liujing'})
+})
 //4.static数据
 server.use(static('./www'));
