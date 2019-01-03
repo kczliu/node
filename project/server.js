@@ -10,10 +10,11 @@ const consolidate=require('consolidate');
 const expressRoute=require('express-route');
 
 var server=express();
-server.listen(8080);
+server.listen(3333);
 
 //1.获取请求数据
 //get自带
+server.use(bodyParser.urlencoded({extend:false}))
 server.use(multerObj.any());
 
 //2.cookie、session
